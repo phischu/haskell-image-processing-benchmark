@@ -1,0 +1,21 @@
+name:                haskell-image-processing-benchmark
+version:             0.1.0.0
+synopsis:            Benchmark different Haskell image processing libraries
+-- description:         
+license:             BSD3
+license-file:        LICENSE
+author:              Philipp Schuster
+maintainer:          pschuster@uni-koblenz.de
+-- copyright:           
+category:            Graphics
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+executable haskell-image-processing-benchmark
+  main-is:             Main.hs
+  -- other-modules:       
+  -- other-extensions:    
+  build-depends:       base >=4.6 && <4.7
+  hs-source-dirs:      src
+  default-language:    Haskell2010
