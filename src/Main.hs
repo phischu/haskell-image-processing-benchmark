@@ -32,7 +32,9 @@ readFriday filepath = do
 type UnmHipImage = UnmHip.GrayImage
 
 readUnmHip :: FilePath -> IO UnmHipImage
-readUnmHip = UnmHip.readImage
+readUnmHip filepath = do
+    image <- UnmHip.readImage filepath
+    return (fmap (+0) image)
 
 type YarrImage = Yarr.UArray Yarr.F Yarr.L Yarr.Dim2 Word8
 
@@ -52,7 +54,7 @@ main :: IO ()
 main = defaultMain [
     bgroup "Image reading" [
         bench "Friday" (whnfIO (readFriday "koblenz.png")),
-        bench "UnmHip" (whnfIO (readUnmHip "koblenz.png")),
+        bench "UnmHip" (whnfIO (readUnmHip "koblenz.pgm")),
         bench "Yarr"   (whnfIO (readYarr "koblenz.png")),
         bench "Repa"   (whnfIO (readRepa "koblenz.png"))]]
 
