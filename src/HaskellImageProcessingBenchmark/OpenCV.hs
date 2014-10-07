@@ -1,13 +1,16 @@
 module HaskellImageProcessingBenchmark.OpenCV (
     readPng) where
 
+import Foreign.C.String (CString,withCString)
+import Foreign.Ptr (Ptr)
 
-foreign import ccall "foo" foo :: Int -> IO Int
+foreign import ccall "readPng" opencv_readPng :: CString -> IO Image
 
-type Image =  ()
+data CvMat
+
+type Image = Ptr CvMat
 
 readPng :: FilePath -> IO Image
-readPng _ = do
-    foo 5 >>= print
+readPng filepath = withCString filepath opencv_readPng
 
 
