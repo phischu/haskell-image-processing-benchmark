@@ -13,4 +13,3 @@ type Image = Ptr CvMat
 readPng :: FilePath -> IO Image
 readPng filepath = withCString filepath opencv_readPng
 
-

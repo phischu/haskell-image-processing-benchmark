@@ -1,10 +1,10 @@
 module Main where
 
-import Criterion (bgroup,bench,whnfIO)
+import Criterion (bgroup,bench,whnfIO,whnf)
 import Criterion.Main (defaultMain)
 
 import qualified HaskellImageProcessingBenchmark.Friday as Friday (
-    readPng)
+    readPng,threshold)
 import qualified HaskellImageProcessingBenchmark.UnmHip as UnmHip (
     readPgm)
 import qualified HaskellImageProcessingBenchmark.Yarr as Yarr (
@@ -15,14 +15,18 @@ import qualified HaskellImageProcessingBenchmark.OpenCV as OpenCV (
     readPng)
 
 main :: IO ()
-main = defaultMain [
-    bgroup "readPng" [
-        bench "Friday" (whnfIO (Friday.readPng "koblenz.png")),
-        bench "Yarr"   (whnfIO (Yarr.readPng "koblenz.png")),
-        bench "Repa"   (whnfIO (Repa.readPng "koblenz.png")),
-        bench "OpenCV" (whnfIO (OpenCV.readPng "koblenz.png"))],
-    bgroup "readPgm" [
-        bench "UnmHip" (whnfIO (UnmHip.readPgm "koblenz.pgm"))]]
+main = do
+    fridayImage <- Friday.readPng "koblenz.png"
+    defaultMain [
+        bgroup "readPng" [
+            bench "Friday" (whnfIO (Friday.readPng "koblenz.png")),
+            bench "Yarr"   (whnfIO (Yarr.readPng "koblenz.png")),
+            bench "Repa"   (whnfIO (Repa.readPng "koblenz.png")),
+            bench "OpenCV" (whnfIO (OpenCV.readPng "koblenz.png"))],
+        bgroup "readPgm" [
+            bench "UnmHip" (whnfIO (UnmHip.readPgm "koblenz.pgm"))],
+        bgroup "threshold" [
+            bench "Friday" (whnf Friday.threshold fridayImage)]]
 
 
 
