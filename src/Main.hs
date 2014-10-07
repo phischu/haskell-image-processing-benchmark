@@ -11,13 +11,16 @@ import qualified HaskellImageProcessingBenchmark.Yarr as Yarr (
     readPng)
 import qualified HaskellImageProcessingBenchmark.Repa as Repa (
     readPng)
+import qualified HaskellImageProcessingBenchmark.OpenCV as OpenCV (
+    readPng)
 
 main :: IO ()
 main = defaultMain [
     bgroup "read png" [
         bench "Friday" (whnfIO (Friday.readPng "koblenz.png")),
         bench "Yarr"   (whnfIO (Yarr.readPng "koblenz.png")),
-        bench "Repa"   (whnfIO (Repa.readPng "koblenz.png"))],
+        bench "Repa"   (whnfIO (Repa.readPng "koblenz.png")),
+        bench "OpenCV" (whnfIO (OpenCV.readPng "koblenz.png"))],
     bgroup "read pgm" [
         bench "UnmHip" (whnfIO (UnmHip.readPgm "koblenz.pgm"))]]
 

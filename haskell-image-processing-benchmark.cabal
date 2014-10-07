@@ -17,7 +17,8 @@ executable haskell-image-processing-benchmark
   other-modules:       HaskellImageProcessingBenchmark.Friday,
                        HaskellImageProcessingBenchmark.UnmHip,
                        HaskellImageProcessingBenchmark.Yarr,
-                       HaskellImageProcessingBenchmark.Repa
+                       HaskellImageProcessingBenchmark.Repa,
+                       HaskellImageProcessingBenchmark.OpenCV
   -- other-extensions:    
   build-depends:       base >=4.6 && <4.7,
                        criterion ==1.0.2.0,
@@ -29,5 +30,6 @@ executable haskell-image-processing-benchmark
                        repa-devil ==0.3.2.2,
                        repa-algorithms ==3.2.4.1
   hs-source-dirs:      src
+  C-sources:           cbits/haskell_image_processing_benchmark_opencv.cpp
   default-language:    Haskell2010
   ghc-options:         -rtsopts -O2 -threaded -with-rtsopts=-N
