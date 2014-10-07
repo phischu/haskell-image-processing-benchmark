@@ -16,12 +16,12 @@ import qualified HaskellImageProcessingBenchmark.OpenCV as OpenCV (
 
 main :: IO ()
 main = defaultMain [
-    bgroup "read png" [
+    bgroup "readPng" [
         bench "Friday" (whnfIO (Friday.readPng "koblenz.png")),
         bench "Yarr"   (whnfIO (Yarr.readPng "koblenz.png")),
         bench "Repa"   (whnfIO (Repa.readPng "koblenz.png")),
         bench "OpenCV" (whnfIO (OpenCV.readPng "koblenz.png"))],
-    bgroup "read pgm" [
+    bgroup "readPgm" [
         bench "UnmHip" (whnfIO (UnmHip.readPgm "koblenz.pgm"))]]
 
 
