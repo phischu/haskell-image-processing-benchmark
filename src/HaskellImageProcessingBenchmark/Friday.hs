@@ -1,14 +1,15 @@
-module HaskellImageProcessingBenchmark.Friday where
+module HaskellImageProcessingBenchmark.Friday (
+    Image,readPng) where
 
-import qualified Vision.Image.Grey as Friday (Grey)
-import qualified Vision.Image.Storage as Friday (load)
-import qualified Vision.Image.Type as Friday (convert)
+import Vision.Image.Grey (Grey)
+import Vision.Image.Storage (load)
+import Vision.Image.Type (convert)
 
-type Image = Friday.Grey
+type Image = Grey
 
-readImage :: FilePath -> IO Image
-readImage filepath = do
-    Right image <- Friday.load Nothing filepath
-    return (Friday.convert image)
+readPng :: FilePath -> IO Image
+readPng filepath = do
+    Right image <- load Nothing filepath
+    return (convert image)
 
 

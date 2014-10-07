@@ -4,21 +4,22 @@ import Criterion (bgroup,bench,whnfIO)
 import Criterion.Main (defaultMain)
 
 import qualified HaskellImageProcessingBenchmark.Friday as Friday (
-    readImage)
+    readPng)
 import qualified HaskellImageProcessingBenchmark.UnmHip as UnmHip (
-    readImage)
+    readPgm)
 import qualified HaskellImageProcessingBenchmark.Yarr as Yarr (
-    readImage)
+    readPng)
 import qualified HaskellImageProcessingBenchmark.Repa as Repa (
-    readImage)
+    readPng)
 
 main :: IO ()
 main = defaultMain [
-    bgroup "Image reading" [
-        bench "Friday" (whnfIO (Friday.readImage "koblenz.png")),
-        bench "UnmHip" (whnfIO (UnmHip.readImage "koblenz.pgm")),
-        bench "Yarr"   (whnfIO (Yarr.readImage "koblenz.png")),
-        bench "Repa"   (whnfIO (Repa.readImage "koblenz.png"))]]
+    bgroup "read png" [
+        bench "Friday" (whnfIO (Friday.readPng "koblenz.png")),
+        bench "Yarr"   (whnfIO (Yarr.readPng "koblenz.png")),
+        bench "Repa"   (whnfIO (Repa.readPng "koblenz.png"))],
+    bgroup "read pgm" [
+        bench "UnmHip" (whnfIO (UnmHip.readPgm "koblenz.pgm"))]]
 
 
 

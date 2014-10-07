@@ -1,12 +1,11 @@
 module HaskellImageProcessingBenchmark.UnmHip (
-    Image,readImage) where
+    Image,readPgm) where
 
-import Data.Image.Boxed (GrayImage)
-import qualified Data.Image.Boxed as UnmHip (readImage)
+import Data.Image.Boxed (GrayImage,readImage)
 
 type Image = GrayImage
 
-readImage :: FilePath -> IO Image
-readImage = UnmHip.readImage
+readPgm :: FilePath -> IO Image
+readPgm = readImage
 
 
