@@ -1,5 +1,5 @@
 module HaskellImageProcessingBenchmark.OpenCV (
-    readPng,threshold) where
+    readPng,threshold,mean) where
 
 import Foreign.C.String (CString,withCString)
 import Foreign.Ptr (Ptr,FunPtr)
