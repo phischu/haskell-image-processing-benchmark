@@ -13,8 +13,6 @@ import Data.Array.Repa.Algorithms.Convolve (convolveOutP,outClamp)
 
 import Data.Word (Word8)
 
-import Control.Exception (evaluate)
-
 type Image = Array D DIM2 Word8
 
 readPng :: FilePath -> IO Image
@@ -25,8 +23,7 @@ readPng filepath = runIL (do
 force :: Image -> IO (Array U DIM2 Word8)
 force image = do
     forcedImage <- computeP image
-    evaluate (deepSeqArray forcedImage ())
-    return forcedImage
+    forcedImage `deepSeqArray` return forcedImage
 
 threshold :: Image -> Image
 threshold = Repa.map (\value -> if value > 127 then 255 else 0)
