@@ -8,7 +8,7 @@ import qualified HaskellImageProcessingBenchmark.Friday as Friday (
 import qualified HaskellImageProcessingBenchmark.UnmHip as UnmHip (
     readPgm,force,threshold,mean)
 import qualified HaskellImageProcessingBenchmark.Yarr as Yarr (
-    readPng,force,threshold)
+    readPng,force,threshold,mean)
 import qualified HaskellImageProcessingBenchmark.Repa as Repa (
     readPng,force,threshold)
 import qualified HaskellImageProcessingBenchmark.OpenCV as OpenCV (
@@ -35,7 +35,8 @@ main = do
             bench "OpenCV" (whnfIO (OpenCV.threshold openCVImage))],
         bgroup "mean" [
             bench "Friday" (whnf Friday.mean fridayImage),
-            bench "UnmHip" (whnfIO (UnmHip.force (UnmHip.mean unmHipImage)))]]
+            bench "UnmHip" (whnfIO (UnmHip.force (UnmHip.mean unmHipImage))),
+            bench "Yarr"   (whnfIO (Yarr.mean yarrImage))]]
 
 
 
