@@ -6,8 +6,6 @@ import Data.Image.Internal (maxIntensity)
 
 import Data.Image.Convolution (convolveRows,convolveCols)
 
-import Control.Exception.Base (evaluate)
-
 type Image = GrayImage
 
 readPgm :: FilePath -> IO Image
@@ -15,9 +13,7 @@ readPgm = readImage
 
 force :: Image -> IO Image
 force image = do
-    x <- evaluate (maxIntensity image)
-    putStrLn (show x)
-    return image
+    maxIntensity image `seq` return image
 
 threshold :: Image -> Image
 threshold = toBinaryImage (<127)
