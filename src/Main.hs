@@ -12,7 +12,7 @@ import qualified HaskellImageProcessingBenchmark.Yarr as Yarr (
 import qualified HaskellImageProcessingBenchmark.Repa as Repa (
     readPng,force,threshold)
 import qualified HaskellImageProcessingBenchmark.OpenCV as OpenCV (
-    readPng)
+    readPng,threshold)
 
 main :: IO ()
 main = do
@@ -20,6 +20,7 @@ main = do
     unmHipImage <- UnmHip.readPgm "koblenz.pgm"
     yarrImage   <- Yarr.readPng   "koblenz.png"
     repaImage   <- Repa.readPng   "koblenz.png"
+    openCVImage <- OpenCV.readPng "koblenz.png"
     defaultMain [
         bgroup "readPng" [
             bench "Friday" (whnfIO (Friday.readPng "koblenz.png")),
@@ -32,7 +33,8 @@ main = do
             bench "Friday" (whnf Friday.threshold fridayImage),
             bench "UnmHip" (whnfIO (UnmHip.force (UnmHip.threshold unmHipImage))),
             bench "Yarr"   (whnfIO (Yarr.force   (Yarr.threshold   yarrImage))),
-            bench "Repa"   (whnfIO (Repa.force   (Repa.threshold   repaImage)))]]
+            bench "Repa"   (whnfIO (Repa.force   (Repa.threshold   repaImage))),
+            bench "OpenCV" (whnfIO (OpenCV.threshold openCVImage))]]
 
 
 

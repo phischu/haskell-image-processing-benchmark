@@ -33,4 +33,4 @@ executable haskell-image-processing-benchmark
   default-language:    Haskell2010
   ghc-options:         -rtsopts -O2 -threaded -with-rtsopts=-N
   c-sources:           cbits/haskell_image_processing_benchmark_opencv.c
-  extra-libraries:     opencv_core,opencv_highgui
+  extra-libraries:     opencv_core,opencv_highgui,opencv_imgproc
