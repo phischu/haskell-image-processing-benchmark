@@ -1,6 +1,10 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 
+void finalizeImage(IplImage* image){
+    cvReleaseImage(&image);
+}
+
 IplImage* readPng(char * filepath){
     return cvLoadImage(filepath,0);
 }
