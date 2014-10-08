@@ -15,7 +15,8 @@ readPgm = readImage
 
 force :: Image -> IO Image
 force image = do
-    evaluate (maxIntensity image)
+    x <- evaluate (maxIntensity image)
+    putStrLn (show x)
     return image
 
 threshold :: Image -> Image

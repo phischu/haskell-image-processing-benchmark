@@ -4,7 +4,7 @@ module HaskellImageProcessingBenchmark.Repa (
 
 import Data.Array.Repa.IO.DevIL (readImage,runIL)
 import qualified Data.Array.Repa.IO.DevIL as Repa (Image(Grey))
-import Data.Array.Repa (Array,D,DIM2,delay,computeP,Z(Z),(:.)((:.)))
+import Data.Array.Repa (Array,D,DIM2,delay,computeP,Z(Z),(:.)((:.)),deepSeqArray)
 import Data.Array.Repa.Repr.Unboxed (U,fromListUnboxed)
 
 import qualified Data.Array.Repa as Repa (map)
@@ -12,6 +12,8 @@ import qualified Data.Array.Repa as Repa (map)
 import Data.Array.Repa.Algorithms.Convolve (convolveOutP,outClamp)
 
 import Data.Word (Word8)
+
+import Control.Exception (evaluate)
 
 type Image = Array D DIM2 Word8
 
@@ -21,7 +23,10 @@ readPng filepath = runIL (do
    return (delay image))
 
 force :: Image -> IO (Array U DIM2 Word8)
-force = computeP
+force image = do
+    forcedImage <- computeP image
+    evaluate (deepSeqArray forcedImage ())
+    return forcedImage
 
 threshold :: Image -> Image
 threshold = Repa.map (\value -> if value > 127 then 255 else 0)
