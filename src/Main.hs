@@ -27,8 +27,6 @@ main = do
             bench "Yarr"   (whnfIO (Yarr.readPng   "koblenz.png")),
             bench "Repa"   (whnfIO (Repa.readPng   "koblenz.png")),
             bench "OpenCV" (whnfIO (OpenCV.readPng "koblenz.png"))],
-        bgroup "readPgm" [
-            bench "UnmHip" (whnfIO (UnmHip.readPgm "koblenz.pgm" >>= UnmHip.force))],
         bgroup "threshold" [
             bench "Friday" (whnf Friday.threshold fridayImage),
             bench "UnmHip" (whnfIO (UnmHip.force (UnmHip.threshold unmHipImage))),
