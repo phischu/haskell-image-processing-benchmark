@@ -22,4 +22,4 @@ threshold :: Image -> Image
 threshold = toBinaryImage (<127)
 
 mean :: Image -> Image
-mean = convolveCols [1,1,1,1,1] . convolveRows [1,1,1,1,1]
+mean = fmap (/25) . convolveCols [1,1,1,1,1] . convolveRows [1,1,1,1,1]
