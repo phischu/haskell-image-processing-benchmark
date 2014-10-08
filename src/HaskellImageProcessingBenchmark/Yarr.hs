@@ -28,16 +28,22 @@ threshold = dmap (\value -> if value > 127 then 255 else 0)
 
 mean :: Image -> IO Image
 mean image = do
-    rowConvolvedImage <- dComputeP (dConvolveLinearDim2WithStaticStencil
-        rowMeanStencil (dmap fromIntegral image))
-    convolvedImage <- dComputeP (dConvolveLinearDim2WithStaticStencil
-        colMeanStencil (rowConvolvedImage :: UArray F L Dim2 Word8))
-    return (dmap (fromIntegral . (`div` 25)) (convolvedImage :: UArray F L Dim2 Word8))
 
-rowMeanStencil :: Dim2Stencil N5 N1 Word8 (Word8 -> Word8 -> IO Word8) Word8
+    rowConvolvedImage <- dComputeP (
+        dConvolveLinearDim2WithStaticStencil
+            rowMeanStencil (dmap fromIntegral image))
+
+    convolvedImage <- dComputeP (
+        dConvolveLinearDim2WithStaticStencil
+            colMeanStencil (rowConvolvedImage :: UArray F L Dim2 Int))
+
+    return (dmap (fromIntegral . (`div` 25)) (
+        convolvedImage :: UArray F L Dim2 Int))
+
+rowMeanStencil :: Dim2Stencil N5 N1 Int (Int -> Int -> IO Int) Int
 rowMeanStencil = [dim2St| 1 1 1 1 1 |]
 
-colMeanStencil :: Dim2Stencil N1 N5 Word8 (Word8 -> Word8 -> IO Word8) Word8
+colMeanStencil :: Dim2Stencil N1 N5 Int (Int -> Int -> IO Int) Int
 colMeanStencil = [dim2St| 1
                           1
                           1

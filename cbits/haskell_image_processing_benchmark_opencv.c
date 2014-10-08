@@ -6,7 +6,7 @@ void finalizeImage(IplImage* image){
 }
 
 IplImage* readPng(char * filepath){
-    return cvLoadImage(filepath,0);
+    return cvLoadImage(filepath,CV_LOAD_IMAGE_GRAYSCALE);
 }
 
 IplImage* threshold(IplImage* image){

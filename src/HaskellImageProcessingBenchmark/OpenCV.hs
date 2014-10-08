@@ -26,11 +26,11 @@ readPng filepath = do
     addImageFinalizer imagePtr
 
 threshold :: Image -> IO Image
-threshold = liftImage opencv_threshold
+threshold = withImage opencv_threshold
 
 mean :: Image -> IO Image
-mean = liftImage opencv_mean
+mean = withImage opencv_mean
 
-liftImage :: (Ptr IPLImage -> IO (Ptr IPLImage)) -> Image -> IO Image
-liftImage f image = withForeignPtr image (\imagePtr -> do
+withImage :: (Ptr IPLImage -> IO (Ptr IPLImage)) -> Image -> IO Image
+withImage f image = withForeignPtr image (\imagePtr -> do
     f imagePtr >>= addImageFinalizer)

@@ -20,10 +20,8 @@ readPng filepath = runIL (do
    Repa.Grey image <- readImage filepath
    return (delay image))
 
-force :: Image -> IO Image
-force image = do
-    forcedImage <- computeP image
-    return (delay (forcedImage :: Array U DIM2 Word8))
+force :: Image -> IO (Array U DIM2 Word8)
+force = computeP
 
 threshold :: Image -> Image
 threshold = Repa.map (\value -> if value > 127 then 255 else 0)
