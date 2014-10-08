@@ -11,6 +11,8 @@ foreign import ccall "readPng" opencv_readPng :: CString -> IO (Ptr IPLImage)
 
 foreign import ccall "threshold" opencv_threshold :: Ptr IPLImage -> IO (Ptr IPLImage)
 
+foreign import ccall "mean" opencv_mean :: Ptr IPLImage -> IO (Ptr IPLImage)
+
 data IPLImage
 
 type Image = ForeignPtr IPLImage
@@ -24,5 +26,11 @@ readPng filepath = do
     addImageFinalizer imagePtr
 
 threshold :: Image -> IO Image
-threshold image = withForeignPtr image (\imagePtr -> do
-    opencv_threshold imagePtr >>= addImageFinalizer)
+threshold = liftImage opencv_threshold
+
+mean :: Image -> IO Image
+mean = liftImage opencv_mean
+
+liftImage :: (Ptr IPLImage -> IO (Ptr IPLImage)) -> Image -> IO Image
+liftImage f image = withForeignPtr image (\imagePtr -> do
+    f imagePtr >>= addImageFinalizer)
