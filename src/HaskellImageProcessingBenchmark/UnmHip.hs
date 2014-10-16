@@ -2,7 +2,6 @@ module HaskellImageProcessingBenchmark.UnmHip (
     Image,readPgm,force,threshold,mean) where
 
 import Data.Image.Boxed (GrayImage,readImage,toBinaryImage)
-import Data.Image.Internal (maxIntensity)
 
 import Data.Image.Convolution (convolveRows,convolveCols)
 
@@ -11,7 +10,9 @@ import Control.DeepSeq (deepseq)
 type Image = GrayImage
 
 readPgm :: FilePath -> IO Image
-readPgm = readImage
+readPgm filepath = do
+    image <- readImage filepath
+    force image
 
 {-# INLINE force #-}
 force :: Image -> IO Image
