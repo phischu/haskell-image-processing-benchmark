@@ -20,12 +20,15 @@ readPng filepath = do
     Yarr.Grey image <- readImage filepath
     return (delay image)
 
+{-# INLINE force #-}
 force :: Image -> IO (UArray F L Dim2 Word8)
 force = dComputeP
 
+{-# INLINE threshold #-}
 threshold :: Image -> Image
 threshold = dmap (\value -> if value > 127 then 255 else 0)
 
+{-# INLINE mean #-}
 mean :: Image -> IO Image
 mean image = do
 
@@ -33,16 +36,16 @@ mean image = do
         dConvolveLinearDim2WithStaticStencil
             rowMeanStencil (dmap fromIntegral image))
 
-    convolvedImage <- dComputeP (
-        dConvolveLinearDim2WithStaticStencil
-            colMeanStencil (rowConvolvedImage :: UArray F L Dim2 Int))
-
     return (dmap (fromIntegral . (`div` 25)) (
-        convolvedImage :: UArray F L Dim2 Int))
+        dConvolveLinearDim2WithStaticStencil (
+            colMeanStencil (
+                rowConvolvedImage :: UArray F L Dim2 Int))))
 
+{-# INLINE rowMeanStencil #-}
 rowMeanStencil :: Dim2Stencil N5 N1 Int (Int -> Int -> IO Int) Int
 rowMeanStencil = [dim2St| 1 1 1 1 1 |]
 
+{-# INLINE colMeanStencil #-}
 colMeanStencil :: Dim2Stencil N1 N5 Int (Int -> Int -> IO Int) Int
 colMeanStencil = [dim2St| 1
                           1
