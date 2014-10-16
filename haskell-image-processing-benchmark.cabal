@@ -28,7 +28,8 @@ executable haskell-image-processing-benchmark
                        yarr-image-io ==1.3.0,
                        repa ==3.2.3.3,
                        repa-devil ==0.3.2.2,
-                       repa-algorithms ==3.2.4.1
+                       repa-algorithms ==3.2.4.1,
+                       deepseq ==1.3.0.2
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options:         -rtsopts -with-rtsopts=-N -Odph -rtsopts -threaded -fno-liberate-case -funfolding-use-threshold1000 -funbox-strict-fields -fexpose-all-unfoldings -funfolding-keeness-factor1000 -fsimpl-tick-factor=500 -fllvm -optlo-O3
