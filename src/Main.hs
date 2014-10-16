@@ -35,7 +35,7 @@ main = do
             bench "OpenCV" (whnfIO (OpenCV.threshold openCVImage))],
         bgroup "mean" [
             bench "Friday" (whnf Friday.mean fridayImage),
-            bench "UnmHip" (nf UnmHip.mean unmHipImage),
+-- too slow            bench "UnmHip" (nf UnmHip.mean unmHipImage),
             bench "Yarr"   (whnfIO (Yarr.mean yarrImage)),
             bench "Repa"   (whnfIO (Repa.mean repaImage)),
             bench "OpenCV" (whnfIO (OpenCV.mean openCVImage))]]

@@ -1,7 +1,7 @@
 module HaskellImageProcessingBenchmark.UnmHip (
     Image,readPgm,threshold,mean) where
 
-import Data.Image.Boxed (GrayImage,readImage,toBinaryImage,ref)
+import Data.Image.Boxed (GrayImage,readImage,toBinaryImage)
 
 import Data.Image.Convolution (convolveRows,convolveCols)
 
