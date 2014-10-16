@@ -1,22 +1,19 @@
 module HaskellImageProcessingBenchmark.UnmHip (
-    Image,readPgm,force,threshold,mean) where
+    Image,readPgm,threshold,mean) where
 
-import Data.Image.Boxed (GrayImage,readImage,toBinaryImage)
+import Data.Image.Boxed (GrayImage,readImage,toBinaryImage,ref)
 
 import Data.Image.Convolution (convolveRows,convolveCols)
 
-import Control.DeepSeq (deepseq)
+import Control.DeepSeq (force)
+import Control.Exception (evaluate)
 
 type Image = GrayImage
 
 readPgm :: FilePath -> IO Image
 readPgm filepath = do
     image <- readImage filepath
-    force image
-
-{-# INLINE force #-}
-force :: Image -> IO Image
-force image = image `deepseq` return image
+    evaluate (force image)
 
 {-# INLINE threshold #-}
 threshold :: Image -> Image

@@ -1,12 +1,12 @@
 module Main where
 
-import Criterion (bgroup,bench,whnfIO,whnf)
+import Criterion (bgroup,bench,whnfIO,whnf,nf)
 import Criterion.Main (defaultMain)
 
 import qualified HaskellImageProcessingBenchmark.Friday as Friday (
     readPng,threshold,mean)
 import qualified HaskellImageProcessingBenchmark.UnmHip as UnmHip (
-    readPgm,force,threshold,mean)
+    readPgm,threshold,mean)
 import qualified HaskellImageProcessingBenchmark.Yarr as Yarr (
     readPng,force,threshold,mean)
 import qualified HaskellImageProcessingBenchmark.Repa as Repa (
@@ -29,13 +29,13 @@ main = do
             bench "OpenCV" (whnfIO (OpenCV.readPng "koblenz.png"))],
         bgroup "threshold" [
             bench "Friday" (whnf Friday.threshold fridayImage),
-            bench "UnmHip" (whnfIO (UnmHip.force (UnmHip.threshold unmHipImage))),
+            bench "UnmHip" (nf UnmHip.threshold unmHipImage),
             bench "Yarr"   (whnfIO (Yarr.force   (Yarr.threshold   yarrImage))),
             bench "Repa"   (whnfIO (Repa.force   (Repa.threshold   repaImage))),
             bench "OpenCV" (whnfIO (OpenCV.threshold openCVImage))],
         bgroup "mean" [
             bench "Friday" (whnf Friday.mean fridayImage),
-            bench "UnmHip" (whnfIO (UnmHip.force (UnmHip.mean unmHipImage))),
+            bench "UnmHip" (nf UnmHip.mean unmHipImage),
             bench "Yarr"   (whnfIO (Yarr.mean yarrImage)),
             bench "Repa"   (whnfIO (Repa.mean repaImage)),
             bench "OpenCV" (whnfIO (OpenCV.mean openCVImage))]]
