@@ -18,8 +18,10 @@ readPng filepath = do
     Right image <- load Nothing filepath
     return (convert image)
 
+{-# INLINE threshold #-}
 threshold :: Image -> Image
 threshold = Friday.threshold (>127) (BinaryThreshold 0 255)
 
+{-# INLINE mean #-}
 mean :: Image -> Image
 mean image = apply (blur 2 :: SeparableFilter GreyPixel Int16 GreyPixel) image
