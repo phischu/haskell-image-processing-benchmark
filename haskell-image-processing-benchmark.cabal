@@ -23,7 +23,7 @@ executable haskell-image-processing-benchmark
   build-depends:       base >=4.6 && <4.7,
                        criterion ==1.0.2.0,
                        friday ==0.1.5,
-                       unm-hip ==0.3.1.6,
+                       unm-hip ==0.3.1.7,
                        yarr ==1.3.2,
                        yarr-image-io ==1.3.0,
                        repa ==3.2.3.3,
