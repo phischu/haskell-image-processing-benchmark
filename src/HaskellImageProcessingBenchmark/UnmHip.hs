@@ -6,14 +6,15 @@ import Data.Image.Internal (maxIntensity)
 
 import Data.Image.Convolution (convolveRows,convolveCols)
 
+import Control.DeepSeq (deepseq)
+
 type Image = GrayImage
 
 readPgm :: FilePath -> IO Image
 readPgm = readImage
 
 force :: Image -> IO Image
-force image = do
-    maxIntensity image `seq` return image
+force image = image `deepseq` return image
 
 threshold :: Image -> Image
 threshold = toBinaryImage (<127)
